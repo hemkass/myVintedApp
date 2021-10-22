@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const router = express.Router();
 
 // import de ma fonction middleware
-const myFunction = require("../middleWare");
+const auth = require("../middleWare");
 
 const cloudinary = require("cloudinary").v2;
 
@@ -12,7 +12,7 @@ const Offer = require("../models/offer");
 const User = require("../models/user");
 
 // poster une annonce
-router.post("/offer/publish", myFunction.auth, async (req, res) => {
+router.post("/offer/publish", auth, async (req, res) => {
   try {
     console.log("je suis passée par la", req.fields);
     //1) verifier l'authentification via le middleware auth
@@ -67,7 +67,7 @@ router.post("/offer/publish", myFunction.auth, async (req, res) => {
 });
 
 //modifier ses annonces
-router.post("/offer/update", myFunction.auth, async (req, res) => {
+router.post("/offer/update", auth, async (req, res) => {
   try {
     if (req.user) {
       const isOffer = await Offer.findById({ _id: req.fields.id });
@@ -125,7 +125,7 @@ router.post("/offer/update", myFunction.auth, async (req, res) => {
 });
 
 //supprimer une annonce
-router.post("/offer/delete", myFunction.auth, async (req, res) => {
+router.post("/offer/delete", auth, async (req, res) => {
   try {
     if (req.user) {
       const isOffer = await Offer.findByIdAndDelete({ id: req.fields.id });

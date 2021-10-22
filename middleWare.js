@@ -23,14 +23,4 @@ const auth = async (req, res, next) => {
   }
 };
 
-const nextPage = async (req, res, next) => {
-  const perPage = req.query.page * 7;
-  const searsh = await Offer.find()
-    .select("product_name product_description product_price")
-    .limit(perPage)
-    .skip(perPage);
-  req.nextPage = searsh;
-  return next();
-};
-
-module.exports = { auth, nextPage };
+module.exports = auth;
