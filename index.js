@@ -18,6 +18,9 @@ cloudinary.config({
 
 mongoose.connect("mongodb://localhost/vinted");
 
+
+const app.get("/", (req,res)=>{ req.json({message:"Welcome on my first app"}))
+
 const userRoutes = require("./routes/user");
 app.use(userRoutes);
 
