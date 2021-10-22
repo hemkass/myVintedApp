@@ -19,7 +19,7 @@ cloudinary.config({
 mongoose.connect(process.env.MONGODB_URI);
 
 app.get("/", (req, res) => {
-  req.json({ message: "Welcome on my first app" });
+  res.json({ message: "Welcome on my first app" });
 });
 
 const userRoutes = require("./routes/user");
