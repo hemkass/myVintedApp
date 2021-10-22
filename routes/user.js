@@ -33,8 +33,9 @@ router.post("/user/signup", async (req, res) => {
             //avatar:
           },
         });
-        if (req.files) {
-          let avatarToUpload = req.files.avatar.path;
+        if (req.files.picture) {
+          console.log("hello");
+          let avatarToUpload = req.files.picture.path;
 
           const result = await cloudinary.uploader.upload(avatarToUpload, {
             public_id: `vinted/users/${newUser._id}`,
