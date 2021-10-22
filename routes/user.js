@@ -33,18 +33,19 @@ router.post("/user/signup", async (req, res) => {
             //avatar:
           },
         });
+        if (req.files) {
+          let avatarToUpload = req.files.avatar.path;
 
-        let avatarToUpload = req.files.avatar.path;
+          const result = await cloudinary.uploader.upload(avatarToUpload, {
+            public_id: `vinted/users/${newUser._id}`,
+            width: 100,
+            height: 100,
+            gravity: "faces",
+            crop: "thumb",
+          });
 
-        const result = await cloudinary.uploader.upload(avatarToUpload, {
-          public_id: `vinted/users/${newUser._id}`,
-          width: 100,
-          height: 100,
-          gravity: "faces",
-          crop: "thumb",
-        });
-
-        newUser.account.avatar = result.secure_url;
+          newUser.account.avatar = result.secure_url;
+        }
 
         await newUser.save();
 

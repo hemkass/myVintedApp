@@ -39,7 +39,7 @@ router.post("/offer/publish", myFunction.auth, async (req, res) => {
       //console.log(newOffer.owner);
 
       //3) Uploader l'image dans un fichier Vinted/offers/id de l'offre
-      console.log("mon image", req.files);
+
       if (req.files.picture) {
         console.log("coucou");
         let pictureToUpload = req.files.picture.path;
