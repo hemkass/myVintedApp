@@ -16,7 +16,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-mongoose.connect("MONGODB_URI");
+mongoose.connect(process.env.MONGODB_URI);
 
 app.get("/", (req, res) => {
   req.json({ message: "Welcome on my first app" });
