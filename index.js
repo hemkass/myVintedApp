@@ -8,7 +8,11 @@ const cors = require("cors");
 
 const app = express();
 app.use(cors());
-app.use(formidable());
+app.use(
+  formidable({
+    multiples: true,
+  })
+);
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,

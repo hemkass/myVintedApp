@@ -14,10 +14,10 @@ const User = require("../models/user");
 // poster une annonce
 router.post("/offer/publish", auth, async (req, res) => {
   try {
-    console.log("je suis passée par la", req.fields);
+    //console.log("je suis passée par la", req.fields);
     //1) verifier l'authentification via le middleware auth
     if (req.user) {
-      console.log("conditions", req.fields);
+      //console.log("conditions", req.fields);
       //2) créer le nouveau produit
 
       const newOffer = new Offer({
@@ -41,23 +41,36 @@ router.post("/offer/publish", auth, async (req, res) => {
       //3) Uploader l'image dans un fichier Vinted/offers/id de l'offre
 
       if (req.files.picture) {
-        console.log("coucou");
-        let pictureToUpload = req.files.picture.path;
-        const result = await cloudinary.uploader.upload(pictureToUpload, {
-          public_id: `vinted/offers/${newOffer._id}`,
-          width: 400,
-          height: 400,
-          crop: "limit",
-          effect: "improve",
-        });
+        const num = 10; // limite max de photos par produit
+        if (req.files.picture.length > num) {
+          res.status(408).json({ message: "${num} pictures maximum" });
+        } else {
+          let urlPicture = [];
+          for (let i = 0; i < req.files.picture.length; i++) {
+            let picturesToUpload = "";
 
-        //4) Ajouter mon image au produit
-        newOffer.product_image = result.secure_url;
+            picturesToUpload = req.files.picture[i].path;
+
+            const result = await cloudinary.uploader.upload(picturesToUpload, {
+              public_id: `vinted/offers/${newOffer._id}/${i}`,
+              width: 400,
+              height: 400,
+              crop: "limit",
+              effect: "improve",
+            });
+            urlPicture.push(result.secure_url);
+            console.log("urldanslaboucle:", urlPicture);
+          }
+
+          //4) Ajouter mon image au produit
+
+          newOffer.product_image = urlPicture;
+        }
       }
 
       await newOffer.save();
 
-      res.status(200).json({ newOffer });
+      res.status(200).json({ message: "offer saved" });
     } else {
       res.status(401).json({ error: "Unauthorized" });
     }

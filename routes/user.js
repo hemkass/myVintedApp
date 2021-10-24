@@ -34,7 +34,6 @@ router.post("/user/signup", async (req, res) => {
           },
         });
         if (req.files.picture) {
-          console.log("hello");
           let avatarToUpload = req.files.picture.path;
 
           const result = await cloudinary.uploader.upload(avatarToUpload, {
@@ -43,11 +42,15 @@ router.post("/user/signup", async (req, res) => {
             height: 100,
             gravity: "faces",
             crop: "thumb",
+            radius: "max",
           });
 
           newUser.account.avatar = result.secure_url;
+        } else {
+          newUser.account.avatar =
+            "https: //res.cloudinary.com/dyj84szrx/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_mx,bo_5px_solid_red,b_rgb:262c35/v1635089804/vinted/users/blank-profile-picture-973461_1280_uxswkl.png";
         }
-
+        console.log(newUser.account.avatar);
         await newUser.save();
 
         res.status(200).json({
@@ -56,7 +59,7 @@ router.post("/user/signup", async (req, res) => {
           account: {
             username: newUser.account.username,
             phone: newUser.account.phone,
-            avatar: newUser.account.phone,
+            avatar: newUser.account.avatar,
           },
         });
       }

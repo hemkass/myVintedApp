@@ -7,44 +7,42 @@ const cloudinary = require("cloudinary").v2;
 const Offer = require("../models/offer");
 const User = require("../models/user");
 
-router.get("/searsh", async (req, res) => {
+router.get("/AdvancedSearsh", async (req, res) => {
   try {
     let filters = {};
-    if (req.query.categories) {
-      filters.categories = new RegExp(req.query.categories, "i");
+    // if (req.fields.categories){filters.categories=new Reg}
+    if (req.fields.title) {
+      filters.product_name = new RegExp(req.fields.title, "i");
     }
-    if (req.query.title) {
-      filters.product_name = new RegExp(req.query.title, "i");
+    if (req.fields.priceMax) {
+      filters.product_price = { $lte: Number(req.fields.priceMax) };
     }
-    if (req.query.priceMax) {
-      filters.product_price = { $lte: Number(req.query.priceMax) };
-    }
-    if (req.query.priceMin) {
+    if (req.fields.priceMin) {
       if (filters.product_price) {
-        filters.product_price.$gte = Number(req.query.priceMin);
+        filters.product_price.$gte = Number(req.fields.priceMin);
       } else {
-        filters.product_price = { $gte: Number(req.query.priceMin) };
+        filters.product_price = { $gte: Number(req.fields.priceMin) };
       }
     }
 
     let sort = {};
 
-    if (req.query.sort === "price-desc") {
+    if (req.fields.sort === "price-desc") {
       sort = { product_price: -1 };
-    } else if (req.query.sort === "price-asc") {
+    } else if (req.fields.sort === "price-asc") {
       sort = { product_price: 1 };
     }
 
-    if (!req.query.page) {
-      req.query.page = 1;
+    if (!req.fields.page) {
+      req.fields.page = 1;
     }
-    console.log(filters);
+
     const limit = 2;
     const offers = await Offer.find(filters)
       .sort(sort)
       .select("product_name product_price ")
       .limit(limit)
-      .skip(limit * (Number(req.query.page) - 1));
+      .skip(limit * (Number(req.fields.page) - 1));
 
     res.json(offers);
   } catch (error) {

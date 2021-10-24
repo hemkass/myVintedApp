@@ -14,7 +14,7 @@ const auth = async (req, res, next) => {
       return res.status(401).json({ error: "Unauthorized" });
     } else {
       req.user = isUser;
-      console.log("j'ai bien été identifié par le middle");
+      //console.log("j'ai bien été identifié par le middle");
 
       return next();
     }

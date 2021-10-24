@@ -11,7 +11,7 @@ const Offer = mongoose.model("Offer", {
     ref: "User",
   },
   //keys: { type: Array },
-  //categories: String,
+  categories: { type: Object },
 });
 
 module.exports = Offer;
