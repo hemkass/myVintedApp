@@ -39,7 +39,7 @@ router.get("/offers", async (req, res) => {
       req.query.page = 1;
     }
     console.log(filters);
-    let limit = 10;
+
     if (req.query.limit) {
       limit = Number(req.query.limit);
       S;
