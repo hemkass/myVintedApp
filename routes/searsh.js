@@ -7,7 +7,7 @@ const cloudinary = require("cloudinary").v2;
 const Offer = require("../models/offer");
 const User = require("../models/user");
 
-router.get("/searsh", async (req, res) => {
+router.get("/offers", async (req, res) => {
   try {
     let filters = {};
     if (req.query.categories) {
@@ -51,6 +51,8 @@ router.get("/searsh", async (req, res) => {
     res.json({ error: { message: error.message } });
   }
 });
+
+// Route qui permmet de récupérer tous les produits
 
 // Route qui permmet de récupérer les informations d'une offre en fonction de son id
 router.get("/offer/:id", async (req, res) => {

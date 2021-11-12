@@ -28,9 +28,12 @@ router.post("/offer/publish", auth, async (req, res) => {
         product_details: [
           req.fields.brand,
           req.fields.size,
+          req.fields.condition,
           req.fields.color,
           req.fields.city,
         ],
+
+        category: [req.fields.category],
 
         owner: req.user,
         //keys:req.fields.]
