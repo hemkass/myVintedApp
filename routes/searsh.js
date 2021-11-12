@@ -39,7 +39,11 @@ router.get("/offers", async (req, res) => {
       req.query.page = 1;
     }
     console.log(filters);
-    const limit = 2;
+    let limit = 10;
+    if (req.query.limit) {
+      limit = Number(req.query.limit);
+    }
+
     const offers = await Offer.find(filters)
       .sort(sort)
       .select("product_name product_price ")
