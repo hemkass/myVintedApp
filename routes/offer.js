@@ -61,7 +61,7 @@ router.post("/offer/publish", auth, async (req, res) => {
               crop: "limit",
               effect: "improve",
             });
-            urlPicture.push(result.secure_url);
+            urlPicture.push(result);
             console.log("urldanslaboucle:", urlPicture);
           }
 
