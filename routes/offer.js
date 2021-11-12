@@ -128,7 +128,7 @@ router.post("/offer/update", auth, async (req, res) => {
           effect: "improve",
         });
 
-        isOffer.product_image = result.secure_url;
+        isOffer.product_image = result;
       }
       await isOffer.save();
       return res.json({
