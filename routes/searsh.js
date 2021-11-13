@@ -49,7 +49,7 @@ router.get("/offers", async (req, res) => {
     const offers = await Offer.find(filters)
       .sort(sort)
       .limit(limit)
-      .skipt((page - 1) * limit);
+      .skip((page - 1) * limit);
 
     const count = await Offer.countDocuments(filters);
 
