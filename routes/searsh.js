@@ -35,7 +35,6 @@ router.get("/offers", async (req, res) => {
       sort = { product_price: 1 };
     }
 
-    // Par défaut on envoie la page 1
     let page = 1;
     if (req.query.page) {
       page = Number(req.query.page);
@@ -50,7 +49,7 @@ router.get("/offers", async (req, res) => {
     const offers = await Offer.find(filters)
       .sort(sort)
       .limit(limit)
-      .skip(limit * (Number(req.query.page) - 1));
+      .skipt((page - 1) * limit);
 
     const count = await Offer.countDocuments(filters);
 
