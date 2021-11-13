@@ -35,20 +35,21 @@ router.get("/offers", async (req, res) => {
       sort = { product_price: 1 };
     }
 
+    // par défaut on envoie une page
     if (!req.query.page) {
       req.query.page = 1;
     }
-    // par défaut on envoie une page
-    let page = 1;
     if (req.query.page) {
       page = Number(req.query.page);
     }
 
     // par défaut, on envoie 10 résultats par page
-    let limit = 10;
+    if (!req.query.limit) {
+      req.query.page = 1;
+    }
+
     if (req.query.limit) {
       limit = Number(req.query.limit);
-      S;
     }
 
     const offers = await Offer.find(filters)
