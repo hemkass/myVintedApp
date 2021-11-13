@@ -99,17 +99,21 @@ router.post("/offer/update", auth, async (req, res) => {
       }
 
       if (req.fields.brand) {
-        isOffer.product_details[0] = req.fields.brand;
+        isOffer.product_details.MARQUE = req.fields.brand;
       }
 
       if (req.fields.size) {
-        isOffer.product_details[1] = req.fields.size;
+        isOffer.product_details.TAILLE = req.fields.size;
       }
       if (req.fields.color) {
-        isOffer.product_details[2] = req.fields.color;
+        isOffer.product_details.COLOR = req.fields.color;
       }
       if (req.fields.city) {
-        isOffer.product_details[3] = req.fields.city;
+        isOffer.product_details.CITY = req.fields.city;
+      }
+
+      if (req.fields.city) {
+        isOffer.product_details.ETAT = req.fields.condition;
       }
 
       if (req.files.picture) {

@@ -38,8 +38,14 @@ router.get("/offers", async (req, res) => {
     if (!req.query.page) {
       req.query.page = 1;
     }
-    console.log(filters);
-    let limit = 50;
+    // par défaut on envoie une page
+    let page = 1;
+    if (req.query.page) {
+      page = Number(req.query.page);
+    }
+
+    // par défaut, on envoie 10 résultats par page
+    let limit = 10;
     if (req.query.limit) {
       limit = Number(req.query.limit);
       S;
@@ -50,7 +56,8 @@ router.get("/offers", async (req, res) => {
       .limit(limit)
       .skip(limit * (Number(req.query.page) - 1));
 
-    res.json(offers);
+    const count = await Offer.countDocuments(filters);
+    res.json({ count: count, offers: offers });
   } catch (error) {
     res.json({ error: { message: error.message } });
   }
