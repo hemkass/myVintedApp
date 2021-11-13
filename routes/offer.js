@@ -25,14 +25,15 @@ router.post("/offer/publish", auth, async (req, res) => {
         product_description: req.fields.description,
         product_price: req.fields.price,
 
-        product_details: {
-          MARQUE: req.fields.brand,
-          TAILLE: req.fields.size,
-          ETAT: req.fields.condition,
-          COULEUR: req.fields.color,
-          VILLE: req.fields.city,
-        },
-        category: [req.fields.category],
+        product_details: [
+          { MARQUE: req.fields.brand },
+          { TAILLE: req.fields.size },
+          { ETAT: req.fields.condition },
+          { COULEUR: req.fields.color },
+          { VILLE: req.fields.city },
+        ],
+
+        category: req.fields.category,
 
         owner: req.user,
         //keys:req.fields.]
@@ -99,21 +100,21 @@ router.post("/offer/update", auth, async (req, res) => {
       }
 
       if (req.fields.brand) {
-        isOffer.product_details.MARQUE = req.fields.brand;
+        isOffer.product_details[0] = req.fields.brand;
       }
 
       if (req.fields.size) {
-        isOffer.product_details.TAILLE = req.fields.size;
+        isOffer.product_details[1] = req.fields.size;
       }
       if (req.fields.color) {
-        isOffer.product_details.COLOR = req.fields.color;
+        isOffer.product_details[3] = req.fields.color;
       }
       if (req.fields.city) {
-        isOffer.product_details.CITY = req.fields.city;
+        isOffer.product_details.CITY[4] = req.fields.city;
       }
 
       if (req.fields.city) {
-        isOffer.product_details.ETAT = req.fields.condition;
+        isOffer.product_details.ETAT[2] = req.fields.condition;
       }
 
       if (req.files.picture) {

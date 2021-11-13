@@ -57,6 +57,7 @@ router.get("/offers", async (req, res) => {
       .skip(limit * (Number(req.query.page) - 1));
 
     const count = await Offer.countDocuments(filters);
+
     res.json({ count: count, offers: offers });
   } catch (error) {
     res.json({ error: { message: error.message } });
