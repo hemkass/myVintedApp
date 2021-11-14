@@ -41,11 +41,11 @@ router.get("/offers", async (req, res) => {
     }
 
     // Par défaut on fixe la limite à 10
-    let limit = 10;
+    let limit = 20;
     if (req.query.limit) {
       limit = Number(req.query.limit);
     }
-
+    console.log(filters);
     const offers = await Offer.find(filters)
       .sort(sort)
       .limit(limit)

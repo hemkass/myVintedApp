@@ -90,7 +90,7 @@ router.post("/user/login", async (req, res) => {
           },
         });
       } else {
-        res.status(428).json({ message: "Invalid password" });
+        res.status(428).json({ message: "Invalid password or mail" });
       }
     } else {
       res.status(428).json({ message: "Invalid request" });
