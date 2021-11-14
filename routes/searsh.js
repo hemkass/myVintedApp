@@ -41,7 +41,7 @@ router.get("/offers", async (req, res) => {
     }
 
     // Par défaut on fixe la limite à 10
-    let limit = 20;
+    let limit = 50;
     if (req.query.limit) {
       limit = Number(req.query.limit);
     }
