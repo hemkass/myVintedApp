@@ -31,7 +31,7 @@ router.get("/offers", async (req, res) => {
 
     if (req.query.sort === "price-desc") {
       sort = { product_price: -1 };
-    } else if (req.query.sort === "price-asc") {
+    } else {
       sort = { product_price: 1 };
     }
 
