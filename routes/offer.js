@@ -23,7 +23,7 @@ router.post("/offer/publish", auth, async (req, res) => {
       const newOffer = new Offer({
         product_name: req.fields.title,
         product_description: req.fields.description,
-        product_price: req.fields.price,
+        product_price: Number(req.fields.price),
 
         product_details: [
           { MARQUE: req.fields.brand },
@@ -96,7 +96,7 @@ router.post("/offer/update", auth, async (req, res) => {
         isOffer.product_description = req.fields.product_description;
       }
       if (req.fields.product_price) {
-        isOffer.product_price = req.fields.product_price;
+        isOffer.product_price = Number(req.fields.product_price);
       }
 
       if (req.fields.brand) {
