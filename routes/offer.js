@@ -97,7 +97,7 @@ router.post("/offer/publish", auth, async (req, res) => {
 
       await newOffer.save();
 
-      res.status(200).json({ message: "offer saved" });
+      res.status(200).json({ id: newOffer._id });
     } else {
       res.status(401).json({ error: "Unauthorized" });
     }
