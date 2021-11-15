@@ -42,7 +42,7 @@ router.post("/offer/publish", auth, async (req, res) => {
       //console.log(newOffer.owner);
 
       //3) Uploader l'image dans un fichier Vinted/offers/id de l'offre
-
+      console.log("coucou", req.files.picture);
       if (req.files.picture) {
         const num = 10; // limite max de photos par produit
         if (req.files.picture.length > num) {
