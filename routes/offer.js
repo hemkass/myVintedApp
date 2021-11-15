@@ -42,32 +42,56 @@ router.post("/offer/publish", auth, async (req, res) => {
       //console.log(newOffer.owner);
 
       //3) Uploader l'image dans un fichier Vinted/offers/id de l'offre
-      console.log("mon fichier de photos", req.files.picture);
+      //console.log("mon fichier de photos", req.files.picture);
+      console.log("coucou", req.files.picture);
       if (req.files.picture) {
+        //console.log("etape1");
         const num = 10; // limite max de photos par produit
         if (req.files.picture.length > num) {
+          // console.log("etape2");
           res.status(408).json({ message: "${num} pictures maximum" });
         } else {
-          let urlPicture = [];
-          for (let i = 0; i < req.files.picture.length; i++) {
-            let picturesToUpload = "";
+          //console.log("etape3");
 
-            picturesToUpload = req.files.picture[i].path;
+          let urlPicture = [];
+          if (Array.isArray(req.files.picture) === false) {
+            const picturesToUpload = req.files.picture.path;
 
             const result = await cloudinary.uploader.upload(picturesToUpload, {
-              public_id: `vinted/offers/${newOffer._id}/${i}`,
+              public_id: `vinted/offers/${newOffer._id}/0`,
               width: 400,
               height: 400,
               crop: "limit",
               effect: "improve",
             });
-            urlPicture.push(result);
-            console.log("urldanslaboucle:", urlPicture);
+
+            newOffer.product_image = result;
+          } else {
+            for (let i = 0; i < req.files.picture.length; i++) {
+              let picturesToUpload = "";
+
+              picturesToUpload = req.files.picture[i].path;
+              console.log("coucou", picturesToUpload);
+
+              console.log("les photos à uploader", picturesToUpload);
+              const result = await cloudinary.uploader.upload(
+                picturesToUpload,
+                {
+                  public_id: `vinted/offers/${newOffer._id}/${i}`,
+                  width: 400,
+                  height: 400,
+                  crop: "limit",
+                  effect: "improve",
+                }
+              );
+              urlPicture.push(result);
+              console.log("urldanslaboucle:", urlPicture);
+            }
+
+            //4) Ajouter mon image au produit
+
+            newOffer.product_image = urlPicture;
           }
-
-          //4) Ajouter mon image au produit
-
-          newOffer.product_image = urlPicture;
         }
       }
 
