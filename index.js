@@ -35,6 +35,9 @@ app.use(offerRoutes);
 const searshRoutes = require("./routes/searsh");
 app.use(searshRoutes);
 
+const paymentRoutes = require("./routes/payment");
+app.use(paymentRoutes);
+
 app.all("*", (req, res) => {
   res.json("All routes");
 });

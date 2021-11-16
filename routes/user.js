@@ -100,4 +100,18 @@ router.post("/user/login", async (req, res) => {
   }
 });
 
+// Trouver l'id d'un user via son token
+router.get("/user/:token", async (req, res) => {
+  try {
+    console.log(req.params.token);
+    const isUser = await User.findOne({ token: req.params.token });
+
+    if (isUser) {
+      res.json(isUser);
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 module.exports = router;
