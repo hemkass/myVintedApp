@@ -16,7 +16,7 @@ router.post("/user/signup", async (req, res) => {
       const isUser = await User.findOne({ email: req.fields.email });
 
       if (isUser) {
-        res.json({ message: "unauthorized" });
+        res.json({ message: "email déjà présent" });
       } else {
         const password = req.fields.password;
         const salt = uid2(16);
